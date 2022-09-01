@@ -1,5 +1,6 @@
 
-import subprocess , os
+import os
+import shutil
 import PySimpleGUI as sg
 from sys import platform
 
@@ -16,15 +17,15 @@ def generate_comand():
     if pixel_perfect:
         pixel_perfect_num = 1
 
-    output_file_and_folder = ""
-    if out_put_folder == "":
-        output_file_and_folder = out_put_file
-    else:
-        output_file_and_folder = font_file + "/" + out_put_file
-
+    
+    executable = ""
+    if platform == "linux" or platform == "linux2":
+        executable = "importador_fontes"
+    elif platform == "win32":
+        executable = "importador_fontes.exe"
     
 
-    cmd = "importador_fontes.exe" + " \"" + font_file + "\" \"" + output_file_and_folder + "\"  \"" + str(font_quality) + "\" \"" + str(pixel_perfect_num) + "\""
+    cmd = executable + " \"" + font_file + "\" \"" + out_put_file + "\"  \"" + str(font_quality) + "\" \"" + str(pixel_perfect_num) + "\""
     print(cmd)
     os.system(cmd)
     
@@ -63,6 +64,10 @@ window = sg.Window('font reader ui', UI,size=(300,600))
     
 
 while True:
+    if os.path.exists(out_put_file) and out_put_folder != "":
+        shutil.move(out_put_file, out_put_folder + "/" + out_put_file)
+    
+
     event, values = window.read()
     if event in (None, "generate comand"):
         font_file = values["font file"]
