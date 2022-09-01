@@ -53,12 +53,11 @@ UI = [
     [sg.Text("pixel perfect")],
     [sg.Checkbox("",default=True,key="pixel perfect")],
 
-    [sg.Button("generate comand"),sg.Button("EXIT")],
-    [sg.Text("",key="cmd")],
+    [sg.Button("OK"),sg.Button("EXIT")],
     
     ] 
 
-window = sg.Window('font reader ui', UI,size=(300,600))
+window = sg.Window('font reader ui', UI,size=(300,350))
 
 
     
@@ -69,7 +68,7 @@ while True:
     
 
     event, values = window.read()
-    if event in (None, "generate comand"):
+    if event in (None, "OK"):
         font_file = values["font file"]
         out_put_folder = values["out put folder"]
         out_put_file = values["out put file name"]
